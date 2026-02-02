@@ -50,5 +50,13 @@ public class ResultsActivity extends AppCompatActivity {
         highScoreText.setText("High Score: " + storedHighScore);
         highScoreNameText.setText("High Score Holder: " + storedHighScoreName);
         restartButton.setEnabled(true);
+        restartButton.setOnClickListener(view -> restartQuiz());
+    }
+
+    private void restartQuiz() {
+        Intent intent = new Intent(this, DifficultyActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }
