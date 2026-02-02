@@ -18,6 +18,7 @@ import com.example.quizgame.R;
 import com.example.quizgame.logic.QuizEngine;
 import com.example.quizgame.model.Difficulty;
 import com.example.quizgame.model.Question;
+import com.example.quizgame.ui.ResultsActivity;
 
 public class QuizActivity extends AppCompatActivity {
     public static final String EXTRA_DIFFICULTY = "com.example.quizgame.extra.DIFFICULTY";
@@ -121,6 +122,9 @@ public class QuizActivity extends AppCompatActivity {
         transitionLocked = true;
         quizEngine.onTimeout();
         updateMistakesDisplay();
+        if (finishIfQuizEnded()) {
+            return;
+        }
         enableInputs(false);
         nextButton.setEnabled(true);
         questionText.setText("Time is up. Tap Next to continue.");
@@ -181,6 +185,9 @@ public class QuizActivity extends AppCompatActivity {
         cancelTimer();
         boolean correct = quizEngine.checkAnswer(answer);
         updateMistakesDisplay();
+        if (finishIfQuizEnded()) {
+            return;
+        }
         enableInputs(false);
         nextButton.setEnabled(true);
         if (correct) {
@@ -192,6 +199,9 @@ public class QuizActivity extends AppCompatActivity {
 
     private void handleNext() {
         cancelTimer();
+        if (finishIfQuizEnded()) {
+            return;
+        }
         if (!quizEngine.advance()) {
             enableInputs(false);
             nextButton.setEnabled(false);
@@ -199,5 +209,17 @@ public class QuizActivity extends AppCompatActivity {
             return;
         }
         resetForNextQuestion();
+    }
+
+    private boolean finishIfQuizEnded() {
+        if (!quizEngine.shouldEnd()) {
+            return false;
+        }
+        cancelTimer();
+        Intent intent = new Intent(this, ResultsActivity.class);
+        intent.putExtra(ResultsActivity.EXTRA_FINAL_SCORE, quizEngine.getScore());
+        startActivity(intent);
+        finish();
+        return true;
     }
 }
