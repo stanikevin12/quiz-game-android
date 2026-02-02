@@ -26,6 +26,9 @@
         <activity
             android:name=".ui.QuizActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.ResultsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
