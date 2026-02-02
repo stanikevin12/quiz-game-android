@@ -16,8 +16,13 @@ public class QuizEngine {
     private int mistakes;
 
     public QuizEngine() {
-        currentDifficulty = Difficulty.EASY;
-        currentQuestions = QuestionBank.getEasyQuestions();
+        this(Difficulty.EASY);
+    }
+
+    public QuizEngine(Difficulty startingDifficulty) {
+        Difficulty resolved = startingDifficulty == null ? Difficulty.EASY : startingDifficulty;
+        currentDifficulty = resolved;
+        currentQuestions = getQuestionsForDifficulty(resolved);
         questionIndex = 0;
         score = 0;
         mistakes = 0;
@@ -90,12 +95,16 @@ public class QuizEngine {
     private void setDifficulty(Difficulty difficulty) {
         currentDifficulty = difficulty;
         questionIndex = 0;
-        if (difficulty == Difficulty.EASY) {
-            currentQuestions = QuestionBank.getEasyQuestions();
-        } else if (difficulty == Difficulty.MEDIUM) {
-            currentQuestions = QuestionBank.getMediumQuestions();
-        } else {
-            currentQuestions = QuestionBank.getHardQuestions();
+        currentQuestions = getQuestionsForDifficulty(difficulty);
+    }
+
+    private List<Question> getQuestionsForDifficulty(Difficulty difficulty) {
+        if (difficulty == Difficulty.MEDIUM) {
+            return QuestionBank.getMediumQuestions();
         }
+        if (difficulty == Difficulty.HARD) {
+            return QuestionBank.getHardQuestions();
+        }
+        return QuestionBank.getEasyQuestions();
     }
 }
