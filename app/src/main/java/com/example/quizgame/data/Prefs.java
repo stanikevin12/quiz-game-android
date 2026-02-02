@@ -47,4 +47,8 @@ public class Prefs {
     public String getHighScoreName() {
         return sharedPreferences.getString(KEY_HIGH_SCORE_NAME, "");
     }
+
+    public String getUsername() {
+        return sharedPreferences.getString(KEY_USERNAME, "");
+    }
 }

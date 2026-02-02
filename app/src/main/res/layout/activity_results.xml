@@ -32,6 +32,14 @@
         android:text="High Score: --"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
+    <TextView
+        android:id="@+id/high_score_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="High Score Holder: --"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
     <Button
         android:id="@+id/restart_button"
         android:layout_width="match_parent"
